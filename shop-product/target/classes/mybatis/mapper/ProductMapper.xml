@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.cn.domain.Product">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="p_name" jdbcType="VARCHAR" property="pName" />
+        <result column="p_price" jdbcType="VARCHAR" property="pPrice" />
+        <result column="stock" jdbcType="INTEGER" property="stock" />
+        <result column="c_time" jdbcType="VARCHAR" property="cTime"/>
+        <result column="up_time" jdbcType="VARCHAR" property="upTime"/>
+        <result column="spare" jdbcType="INTEGER" property="spare" />
+        <result column="p_type" jdbcType="VARCHAR" property="pType" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, p_name, p_price, stock, c_time, up_time, spare, p_type
+    </sql>
+
+    <insert id="insertDynamic" parameterType="com.cn.domain.Product">
+        insert into tb_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pName != null">
+                p_name,
+            </if>
+            <if test="pPrice != null">
+                p_price,
+            </if>
+            <if test="stock != null">
+                stock,
+            </if>
+            <if test="cTime != null">
+                c_time,
+            </if>
+            <if test="upTime != null">
+                up_time,
+            </if>
+            <if test="spare != null">
+                spare,
+            </if>
+            <if test="pType != null">
+                p_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pName != null">
+                #{pName,jdbcType=VARCHAR},
+            </if>
+            <if test="pPrice != null">
+                #{pPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null">
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="cTime != null">
+                #{cTime,jdbcType=VARCHAR},
+            </if>
+            <if test="upTime != null">
+                #{upTime,jdbcType=VARCHAR},
+            </if>
+            <if test="spare != null">
+                #{spare,jdbcType=INTEGER},
+            </if>
+            <if test="pType != null">
+                #{pType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateDynamic" parameterType="com.cn.domain.Product">
+        update tb_product
+        <set>
+            <if test="pName != null">
+                p_name = #{pName,jdbcType=VARCHAR},
+            </if>
+            <if test="pPrice != null">
+                p_price = #{pPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="cTime != null">
+                c_time = #{cTime,jdbcType=VARCHAR},
+            </if>
+            <if test="upTime != null">
+                up_time = #{upTime,jdbcType=VARCHAR},
+            </if>
+            <if test="spare != null">
+                spare = #{spare,jdbcType=INTEGER},
+            </if>
+            <if test="pType != null">
+                p_type = #{pType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  tb_product
+        where id = #{id,jdbcType=INTEGER}
+        limit 1
+    </select>
+
+
+</mapper>

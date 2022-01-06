@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.cn.domain.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="pa_word" jdbcType="VARCHAR" property="paWord"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="c_time" jdbcType="VARCHAR" property="cTime"/>
+        <result column="up_time" jdbcType="VARCHAR" property="upTime"/>
+        <result column="level_user" jdbcType="INTEGER" property="levelUser"/>
+        <result column="spare" jdbcType="VARCHAR" property="spare"/>
+        <result column="display" jdbcType="INTEGER" property="display"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+     id, user_name, 'pa_word', phone, c_time, up_time, level_user, spare, display
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.cn.domain.User">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="paWord != null">
+                pa_word,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="cTime != null">
+                c_time,
+            </if>
+            <if test="upTime != null">
+                up_time,
+            </if>
+            <if test="levelUser != null">
+                level_user,
+            </if>
+            <if test="spare != null">
+                spare,
+            </if>
+            <if test="display != null">
+                display,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="paWord != null">
+                #{paWord,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="cTime != null">
+                #{cTime,jdbcType=VARCHAR},
+            </if>
+            <if test="upTime != null">
+                #{upTime,jdbcType=VARCHAR},
+            </if>
+            <if test="levelUser != null">
+                #{levelUser,jdbcType=INTEGER},
+            </if>
+            <if test="spare != null">
+                #{spare,jdbcType=VARCHAR},
+            </if>
+            <if test="display != null">
+                #{display,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  tb_user
+        where id = #{id,jdbcType=INTEGER}
+        limit 1
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  tb_user
+        ORDER BY `c_time` DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+
+</mapper>

@@ -1,0 +1,26 @@
+server:
+  port: 7000
+  servlet:
+    context-path: "/"
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8088 # 设置Sentinel连接控制台的主机地址和端口
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 让gateway可以发现nacos中的服务
+      routes: # 路由   省略不写时，就使用默认路由
+        - id: product_route #当前路由发的标识，要求唯一
+#          uri: http://localhost:7038 # 请求最终要求被转发的地址
+          uri: lb://shop-product # lb指的是负载均衡，后面是具体微服务在nacos中的标识名称
+          order: 1 # 路由的优先级，数字越小代表路由的优先级越高
+          predicates: # 断言（条件判断，返回boolean类型 转发请求要满足要求）
+            - Path=/product-serv/** # 当请求路径满足path指定的规则时，此路由信息才会正常转发
+          filters: # 过滤器（在请求传递过程中，对请求做相关处理）
+            - StripPrefix=1 # 在请求转发之前去掉一层路径
