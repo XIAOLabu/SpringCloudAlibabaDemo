@@ -1,0 +1,17 @@
+server:
+  port: 7037
+  servlet:
+    context-path: "/"
+spring:
+  application:
+    name: shop-product
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/dev_cloud_product?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml

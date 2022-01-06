@@ -1,0 +1,36 @@
+server:
+  port: 7047
+  servlet:
+    context-path: "/"
+
+spring:
+  application:
+    name: shop-order
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8088 # 设置Sentinel连接控制台的主机地址和端口
+
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/dev_cloud_product?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+#日志级别 trace<debug<info<warn<error<fatal 默认info
+logging:
+  pattern:
+    console:  '%d{yyyy-MM-dd} [%thread] %-5level %logger{50} - %msg%n'
+    file:  '%d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} ==== %msg%n'
+  file:
+    path: /spring_log/shop-order.log
+
+#实现feign对sentinel容错支持
+feign:
+  sentinel:
+    enabled: true

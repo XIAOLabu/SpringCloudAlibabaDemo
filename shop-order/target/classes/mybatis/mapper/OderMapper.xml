@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.cn.domain.Order">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+        <result column="pay_order_id" jdbcType="VARCHAR" property="payOrderId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="p_name" jdbcType="VARCHAR" property="pName" />
+        <result column="p_price" jdbcType="VARCHAR" property="pPrice" />
+        <result column="p_number" jdbcType="INTEGER" property="pNumber" />
+        <result column="p_id" jdbcType="INTEGER" property="pId" />
+        <result column="c_time" jdbcType="VARCHAR" property="cTime" />
+        <result column="up_time" jdbcType="VARCHAR" property="upTime" />
+        <result column="out_time" jdbcType="VARCHAR" property="outTime" />
+        <result column="spare" jdbcType="VARCHAR" property="spare" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, order_id, pay_order_id, user_id, p_name, p_price, p_number, p_id, c_time, up_time,
+      out_time, spare, user_name
+    </sql>
+
+    <insert id="insertDynamic" parameterType="com.cn.domain.Order" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+        insert into tb_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="payOrderId != null">
+                pay_order_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="pName != null">
+                p_name,
+            </if>
+            <if test="pPrice != null">
+                p_price,
+            </if>
+            <if test="pNumber != null">
+                p_number,
+            </if>
+            <if test="pId != null">
+                p_id,
+            </if>
+            <if test="cTime != null">
+                c_time,
+            </if>
+            <if test="upTime != null">
+                up_time,
+            </if>
+            <if test="outTime != null">
+                out_time,
+            </if>
+            <if test="spare != null">
+                spare,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="payOrderId != null">
+                #{payOrderId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="pName != null">
+                #{pName,jdbcType=VARCHAR},
+            </if>
+            <if test="pPrice != null">
+                #{pPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="pNumber != null">
+                #{pNumber,jdbcType=INTEGER},
+            </if>
+            <if test="pId != null">
+                #{pId,jdbcType=INTEGER},
+            </if>
+            <if test="cTime != null">
+                #{cTime,jdbcType=VARCHAR},
+            </if>
+            <if test="upTime != null">
+                #{upTime,jdbcType=VARCHAR},
+            </if>
+            <if test="outTime != null">
+                #{outTime,jdbcType=VARCHAR},
+            </if>
+            <if test="spare != null">
+                #{spare,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  tb_order
+        where order_id = #{orderId,jdbcType=VARCHAR}
+        limit 1
+    </select>
+
+    <select id="findPageWithResult" parameterType="com.cn.domain.Order" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  tb_order
+        limit #{start},#{pageSize}
+    </select>
+
+</mapper>
