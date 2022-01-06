@@ -22,5 +22,6 @@ public class test {
         System.out.println(s);
         String replace = s.replace("【", "").replace("】",";");
         System.out.println(replace);
+        System.out.println("xxxxxxxxxxx");
     }
 }
